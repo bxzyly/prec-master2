@@ -2,30 +2,40 @@ package com.goi.result;
 
 public class Result<T> {
 
-    private String flag;
-    private T content;
+    private T data;
+    private Integer resultCode;
+    private String resultInfo;
 
     public Result() {
     }
 
-    public Result(String flag, T content) {
-        this.flag = flag;
-        this.content = content;
+    public Result(T data, int resultCode, String resultInfo) {
+        this.data = data;
+        this.resultCode = resultCode;
+        this.resultInfo = resultInfo;
     }
 
-    public String getFlag() {
-        return flag;
+    public T getData() {
+        return data;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public T getContent() {
-        return content;
+    public Integer getResultCode() {
+        return resultCode;
     }
 
-    public void setContent(T content) {
-        this.content = content;
+    public void setResultCode(Integer resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultInfo() {
+        return resultInfo;
+    }
+
+    public void setResultInfo(String resultInfo) {
+        this.resultInfo = resultInfo;
     }
 }

@@ -2,9 +2,7 @@ package com.goi.controller;
 
 
 import com.goi.entity.Article;
-import com.goi.result.Result;
-import com.goi.result.ReturnData;
-import com.goi.service.ArticleService;
+import com.goi.service.Impl.ArticleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController {
 
     @Autowired
-    private ArticleService articleService;
+    private ArticleServiceImpl articleServiceImpl;
 
     /**
      * 点赞
@@ -25,7 +23,7 @@ public class ArticleController {
      */
     @RequestMapping("/addAgree")
     public String addAgree(@RequestParam("userId") String userId,@RequestParam("articleId") String articleId){
-       return   articleService.addAgree(userId,articleId);
+       return   articleServiceImpl.addAgree(userId,articleId);
     }
 
     /**
@@ -36,16 +34,16 @@ public class ArticleController {
      */
     @RequestMapping("/addDisagree")
     public String addDisagree(@RequestParam("userId") String userId,@RequestParam("articleId") String articleId){
-        return   articleService.addDisagree(userId,articleId);
+        return   articleServiceImpl.addDisagree(userId,articleId);
     }
 
     @RequestMapping("/addArticle")
     public String addArticel(Article article){
-        return articleService.addArticle(article);
+        return articleServiceImpl.addArticle(article);
     }
 
-    @RequestMapping("/getArticleById")
-    public ReturnData<Article> getArticleById(@RequestParam("id") int articleId){
-        return articleService.getArticleById(articleId);
-    }
+//    @RequestMapping("/getArticleById")
+//    public ReturnData<Article> getArticleById(@RequestParam("id") int articleId){
+//        return articleServiceImpl.getArticleById(articleId);
+//    }
 }

@@ -10,7 +10,7 @@ public class Accusation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String content;
 
@@ -26,6 +26,14 @@ public class Accusation {
         this.content = content;
         this.reporterId = reporterId;
         this.reportedId = reportedId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -50,6 +58,16 @@ public class Accusation {
 
     public void setReportedId(int reportedId) {
         this.reportedId = reportedId;
+    }
+
+    @Override
+    public String toString() {
+        return "Accusation{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", reporterId=" + reporterId +
+                ", reportedId=" + reportedId +
+                '}';
     }
 }
 

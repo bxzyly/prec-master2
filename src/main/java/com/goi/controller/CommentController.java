@@ -1,8 +1,7 @@
 package com.goi.controller;
 
 import com.goi.entity.Comment;
-import com.goi.result.Result;
-import com.goi.service.CommentService;
+import com.goi.service.Impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +14,11 @@ import java.util.List;
 public class CommentController {
 
     @Autowired
-    private CommentService commentService;
+    private CommentServiceImpl commentServiceImpl;
 
     @RequestMapping("/addComment")
     public String addComment(Comment comment){
-        return commentService.addComment(comment);
+        return commentServiceImpl.addComment(comment);
     }
 
     /**
@@ -27,9 +26,9 @@ public class CommentController {
      * @param articeId
      * @return
      */
-    @RequestMapping("/findCommentByArticeId")
-    public Result< List<List<Comment>>> findCommentByArticeId(@RequestParam("articeId") String articeId){
-        return commentService.findCommentByArticeId(articeId);
-    }
+//    @RequestMapping("/findCommentByArticeId")
+////    public Result< List<List<Comment>>> findCommentByArticeId(@RequestParam("articeId") String articeId){
+////        return commentServiceImpl.findCommentByArticeId(articeId);
+////    }
 
 }

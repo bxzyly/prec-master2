@@ -14,7 +14,7 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String adminName;
 
@@ -27,6 +27,14 @@ public class Admin {
     public Admin(String adminName, String password) {
         this.adminName = adminName;
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAdminName() {
@@ -43,6 +51,15 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", adminName='" + adminName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
 

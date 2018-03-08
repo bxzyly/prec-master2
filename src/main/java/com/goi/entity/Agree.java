@@ -13,7 +13,7 @@ public class Agree {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private int articleId;
 
@@ -26,6 +26,14 @@ public class Agree {
     public Agree(int articleId, int userId) {
         this.articleId = articleId;
         this.userId = userId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getArticleId() {
@@ -42,5 +50,14 @@ public class Agree {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Agree{" +
+                "id=" + id +
+                ", articleId=" + articleId +
+                ", userId=" + userId +
+                '}';
     }
 }

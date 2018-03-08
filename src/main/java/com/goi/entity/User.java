@@ -2,8 +2,13 @@ package com.goi.entity;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Entity
@@ -11,16 +16,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    private String username;//用户名
-
-    private String password;//密码
-
-    @Column(unique = true,nullable = false,length = 20)
-    private String name;//昵称
+    private Long id;
 
     @Column(nullable = false)
+    @NotEmpty(message = "用户名不能为空！")
+    private String username;//用户名
+
+    @Column(nullable = false)
+    @NotEmpty(message = "密码不能为空！")
+    @JsonIgnore
+    private String password;//密码
+
+    @Column(unique = true,length = 20)
+    private String nickname;//昵称
+
     private String  sex;//性别
 
     @Column(nullable = false)
@@ -39,20 +48,18 @@ public class User {
     private String company;//公司
 
     @Column(nullable = false)
+    @Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$", message = "手机号不正确")
+    @NotNull(message = "手机号不能为空！")
     private String telephone;//手机
-
-    @Column(nullable = false)
-    private String email;//邮件
 
     private String personalitySignature;//个性签名
 
     private String personalExplanation;//个人说明
 
-    @Column(nullable = false)
     private String lableIds;//userModel中用户基本类型id
 
     @Column(nullable = false)
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date time;//创建时间
 
     private int reported = 0;//被举报的数
@@ -64,18 +71,16 @@ public class User {
     public User() {
     }
 
-    public User(String name,String password ,String sex, String telephone, String email) {
-        this.name = name;
-        this.sex = sex;
-        this.telephone = telephone;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String username, String password, String name, String sex, int userType, String birthday, String bloodType, String hometown, String location, String school, String company, String telephone, String email, String personalitySignature, String personalExplanation, String lableIds, Date time, int reported, int fabulous, String followIds) {
+    public User(String username, String password, String telephone) {
         this.username = username;
         this.password = password;
-        this.name = name;
+        this.telephone = telephone;
+    }
+
+    public User(String username, String password, String nickname, String sex, int userType, String birthday, String bloodType, String hometown, String location, String school, String company, String telephone, String personalitySignature, String personalExplanation, String lableIds, Date time, int reported, int fabulous, String followIds) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
         this.sex = sex;
         this.userType = userType;
         this.birthday = birthday;
@@ -85,7 +90,6 @@ public class User {
         this.school = school;
         this.company = company;
         this.telephone = telephone;
-        this.email = email;
         this.personalitySignature = personalitySignature;
         this.personalExplanation = personalExplanation;
         this.lableIds = lableIds;
@@ -95,11 +99,11 @@ public class User {
         this.followIds = followIds;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,12 +123,12 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getSex() {
@@ -199,14 +203,6 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPersonalitySignature() {
         return personalitySignature;
     }
@@ -261,5 +257,31 @@ public class User {
 
     public void setFollowIds(String followIds) {
         this.followIds = followIds;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", userType=" + userType +
+                ", birthday='" + birthday + '\'' +
+                ", bloodType='" + bloodType + '\'' +
+                ", hometown='" + hometown + '\'' +
+                ", location='" + location + '\'' +
+                ", school='" + school + '\'' +
+                ", company='" + company + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", personalitySignature='" + personalitySignature + '\'' +
+                ", personalExplanation='" + personalExplanation + '\'' +
+                ", lableIds='" + lableIds + '\'' +
+                ", time=" + time +
+                ", reported=" + reported +
+                ", fabulous=" + fabulous +
+                ", followIds='" + followIds + '\'' +
+                '}';
     }
 }

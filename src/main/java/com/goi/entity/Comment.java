@@ -1,42 +1,55 @@
 package com.goi.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.dao.DataAccessException;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Comment {
 
+    /**
+     * 评论
+     */
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
+    @NotEmpty(message = "评论内容不能为空，content")
     @Column(nullable = false)
     private String content;
 
+    @NotNull(message = "文章id不能为空，articleId")
     @Column(nullable = false)
-    private int articleId;
+    private Long articleId;
 
+    @NotNull(message = "评论者id不能为空，userId")
     @Column(nullable = false)
-    private String commentedIds="0";//被评论者id
+    private Long userId; // 评论者id
 
+    private Long pId; // 父评论
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
-    private int userId;//评论者id
+    private Date time; // 创建时间
 
-    @Column(nullable = false)
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date time;//创建时间
+    @Transient
+    private List<Comment> comments; // 被评论
 
-    public Comment(){}
+    public Long getId() {
+        return id;
+    }
 
-    public Comment(String content, int articleId, String commentedIds, int userId, Date time) {
-        this.content = content;
-        this.articleId = articleId;
-        this.commentedIds = commentedIds;
-        this.userId = userId;
-        this.time = time;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -47,28 +60,28 @@ public class Comment {
         this.content = content;
     }
 
-    public int getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(int articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
 
-    public String getCommentedIds() {
-        return commentedIds;
-    }
-
-    public void setCommentedIds(String commentedIds) {
-        this.commentedIds = commentedIds;
-    }
-
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getpId() {
+        return pId;
+    }
+
+    public void setpId(Long pId) {
+        this.pId = pId;
     }
 
     public Date getTime() {
@@ -77,5 +90,46 @@ public class Comment {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", articleId=" + articleId +
+                ", userId=" + userId +
+                ", pId=" + pId +
+                ", time=" + time +
+                ", comments=" + comments +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(articleId, comment.articleId) &&
+                Objects.equals(userId, comment.userId) &&
+                Objects.equals(pId, comment.pId) &&
+                Objects.equals(time, comment.time) &&
+                Objects.equals(comments, comment.comments);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, content, articleId, userId, pId, time, comments);
     }
 }
