@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User {
@@ -56,8 +58,6 @@ public class User {
 
     private String personalExplanation;//个人说明
 
-    private String lableIds;//userModel中用户基本类型id
-
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date time;//创建时间
@@ -68,6 +68,9 @@ public class User {
 
     private String followIds = "0";//关注某人的id字符串
 
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Label> labelUserList = new ArrayList<>();
+
     public User() {
     }
 
@@ -77,7 +80,7 @@ public class User {
         this.telephone = telephone;
     }
 
-    public User(String username, String password, String nickname, String sex, int userType, String birthday, String bloodType, String hometown, String location, String school, String company, String telephone, String personalitySignature, String personalExplanation, String lableIds, Date time, int reported, int fabulous, String followIds) {
+    public User(String username, String password, String nickname, String sex, int userType, String birthday, String bloodType, String hometown, String location, String school, String company, String telephone, String personalitySignature, String personalExplanation, Date time, int reported, int fabulous, String followIds) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
@@ -92,7 +95,6 @@ public class User {
         this.telephone = telephone;
         this.personalitySignature = personalitySignature;
         this.personalExplanation = personalExplanation;
-        this.lableIds = lableIds;
         this.time = time;
         this.reported = reported;
         this.fabulous = fabulous;
@@ -219,14 +221,6 @@ public class User {
         this.personalExplanation = personalExplanation;
     }
 
-    public String getLableIds() {
-        return lableIds;
-    }
-
-    public void setLableIds(String lableIds) {
-        this.lableIds = lableIds;
-    }
-
     public Date getTime() {
         return time;
     }
@@ -259,6 +253,14 @@ public class User {
         this.followIds = followIds;
     }
 
+    public List<Label> getLabelUserList() {
+        return labelUserList;
+    }
+
+    public void setLabelUserList(List<Label> labelUserList) {
+        this.labelUserList = labelUserList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -277,7 +279,6 @@ public class User {
                 ", telephone='" + telephone + '\'' +
                 ", personalitySignature='" + personalitySignature + '\'' +
                 ", personalExplanation='" + personalExplanation + '\'' +
-                ", lableIds='" + lableIds + '\'' +
                 ", time=" + time +
                 ", reported=" + reported +
                 ", fabulous=" + fabulous +

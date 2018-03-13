@@ -3,8 +3,8 @@ package com.goi.enums;
 public enum ResultEnum {
 
     Fail(-1,"失败"),
-    Error(0,"未知错误"),
-    Success(1,"成功");
+    Error(1,"未知错误"),
+    Success(0,"成功");
 
     private Integer code;
 

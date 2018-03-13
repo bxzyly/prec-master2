@@ -19,7 +19,7 @@ public class ExceptionHandle {
 
         if (e instanceof MyException){
             MyException myException = (MyException) e;
-            return ResultUtil.error(myException.getCode(), myException.getMessage());
+            return ResultUtil.error(myException.getMessage());
         }else {
             //将系统异常以打印出来
             logger.info("[系统异常]{}",e);

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class Article {
     private Long authorId; // 作者id
 
     @NotEmpty(message = "文章内容不能为空，content")
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String content; // 文章内容
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -35,11 +36,22 @@ public class Article {
 
     private Long hot = (long)0; // 热度
 
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Label> articleLabelList  = new ArrayList<>();
+
     @Transient
     private List<Comment> comments; // 评论
 
     @Transient
     private List<Label> labels; // 文章标签
+
+    public List<Label> getArticleLabelList() {
+        return articleLabelList;
+    }
+
+    public void setArticleLabelList(List<Label> articleLabelList) {
+        this.articleLabelList = articleLabelList;
+    }
 
     public Long getId() {
         return id;
