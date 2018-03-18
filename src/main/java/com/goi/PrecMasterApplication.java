@@ -6,11 +6,15 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 
 @SpringBootApplication
-public class PrecMasterApplication {
+@EnableCaching
+public class PrecMasterApplication extends SpringBootServletInitializer {
 
 
 	/**
@@ -27,7 +31,12 @@ public class PrecMasterApplication {
 		return new HttpMessageConverters(converter);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		SpringApplication.run(PrecMasterApplication.class, args);
 	}
+
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//		return builder.sources(PrecMasterApplication.class);
+//	}
 }

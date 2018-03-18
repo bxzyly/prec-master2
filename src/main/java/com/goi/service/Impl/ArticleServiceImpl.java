@@ -2,10 +2,7 @@ package com.goi.service.Impl;
 
 
 import com.goi.entity.*;
-import com.goi.repository.AgreeRepository;
-import com.goi.repository.ArticleRepository;
-import com.goi.repository.DisagreeRepository;
-import com.goi.repository.UserRepository;
+import com.goi.repository.*;
 import com.goi.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LabelRepository labelRepository;
 
 
     @Override
@@ -58,6 +58,18 @@ public class ArticleServiceImpl implements ArticleService {
             }
         }
         return articleList;
+    }
+
+    @Override
+    @Transactional
+    public List<Article> getArticleById(Long labelId) throws Exception{
+        Label label = labelRepository.findOne(labelId);
+        List<Article> articleList = label.getLabelfromArticle();
+        List<Article> list = new ArrayList<>();
+        for(int i = 0;i<20;i++){
+            list.add(articleList.get(i));
+        }
+        return sort(list);
     }
 
     public List<Article> sort(List<Article> list){

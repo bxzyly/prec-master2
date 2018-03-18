@@ -23,8 +23,8 @@ public class VerificationCodeController {
     public Object getVCodeForRegister(@RequestParam("telephone") String telephone, HttpSession session)throws Exception{
         boolean flag = CheckTelephoneUtil.isMobileNum(telephone);//判断手机号是否正确
         if(flag){
-            String random = ((int)Math.random()*89+10)+""+((int)Math.random()*89+10)+""+((int)Math.random()*89+10);//验证码
-            System.out.println("验证码"+random);
+            String random = ((int)(Math.random()*89)+10)+""+((int)(Math.random()*89)+10)+""+((int)(Math.random()*89)+10);//验证码
+            //System.out.println("验证码"+random);
             AliyunMessageUtil.sendSms(telephone,random);
             String vcode = MD5Util.md5Password(telephone+random);
             session.setAttribute("VCodeTelephone",telephone);

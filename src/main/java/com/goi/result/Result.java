@@ -3,16 +3,16 @@ package com.goi.result;
 public class Result<T> {
 
     private T data;
-    private Integer resultCode;
-    private String resultInfo;
+    private Integer code;
+    private String msg;
 
     public Result() {
     }
 
-    public Result(T data, int resultCode, String resultInfo) {
+    public Result(T data, int code, String msg) {
         this.data = data;
-        this.resultCode = resultCode;
-        this.resultInfo = resultInfo;
+        this.code = code;
+        this.msg = msg;
     }
 
     public T getData() {
@@ -23,19 +23,19 @@ public class Result<T> {
         this.data = data;
     }
 
-    public Integer getResultCode() {
-        return resultCode;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setResultCode(Integer resultCode) {
-        this.resultCode = resultCode;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    public String getResultInfo() {
-        return resultInfo;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setResultInfo(String resultInfo) {
-        this.resultInfo = resultInfo;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

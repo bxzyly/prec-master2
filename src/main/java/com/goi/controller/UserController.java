@@ -7,6 +7,7 @@ import com.goi.result.Result;
 import com.goi.service.UserService;
 import com.goi.util.MD5Util;
 import com.goi.util.ResultUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class UserController{
      *用户注册
      * @return
      */
+    @ApiOperation(value = "注册",notes = "注册")
     @PostMapping("/userRegister")
     public Object register(@Valid User user, BindingResult bindingResult, @RequestParam("VCode") String vcode, HttpSession httpSession) throws Exception {
         if(bindingResult.hasErrors()){
@@ -72,22 +74,29 @@ public class UserController{
         }
         if(u !=null){//登录成功！
             httpSession.setAttribute("userId",u.getId());
-            return ResultUtil.success();
+            return ResultUtil.success(u);
         }else{
             return ResultUtil.error();
         }
     }
 
     @PostMapping("/userLoginByTelephone")
-    public Result loginByTelephone(@RequestParam("telephone") String telephone,@RequestParam("verificationCode") String erificationCode){
-        if(true){//判断验证码
-            return ResultUtil.fail("验证码错误！");
+    public Result loginByTelephone(@RequestParam("telephone") String telephone,@RequestParam("verificationCode") String verificationCode,HttpSession httpSession) throws Exception {
+        String random = MD5Util.md5Password(telephone+verificationCode);
+        if(!random.equals(String.valueOf(httpSession.getAttribute("VCodeForTelephone")))){
+            throw new MyException("验证码错误!");
         }
         boolean loginFlag = userService.checkLoginByTelephone(telephone);
         if(loginFlag){
             return ResultUtil.success();
         }else{
-            return ResultUtil.fail("无此用户！");
+            User u = null;
+            userService.addUser(u = new User("用户_"+telephone,"123456",telephone));
+            u = userService.checkLoginByUsername(u.getUsername(),"123456");
+            httpSession.removeAttribute("VCodeTelephone");
+            httpSession.removeAttribute("VCodeForTelephone");
+            httpSession.setAttribute("userId",u.getId());
+            return ResultUtil.success(u,"注册并登录成功");
         }
     }
 }
