@@ -44,7 +44,7 @@ public class UserController{
         }
         User u = null;
         if(!userService.checkUsername(user.getUsername())){
-            if(userService.addUser(u = new User(user.getUsername(),user.getPassword(),user.getTelephone()))){
+            if(userService.addUser(u = new User(user.getUsername(),user.getPassword(),user.getTelephone(),0))){
                 httpSession.removeAttribute("VCodeTelephone");
                 httpSession.removeAttribute("VCodeForTelephone");
                 httpSession.setAttribute("userId",u.getId());
@@ -91,7 +91,7 @@ public class UserController{
             return ResultUtil.success();
         }else{
             User u = null;
-            userService.addUser(u = new User("用户_"+telephone,"123456",telephone));
+            userService.addUser(u = new User("用户_"+telephone,"123456",telephone,1));
             u = userService.checkLoginByUsername(u.getUsername(),"123456");
             httpSession.removeAttribute("VCodeTelephone");
             httpSession.removeAttribute("VCodeForTelephone");

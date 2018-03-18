@@ -24,9 +24,9 @@ public class User {
     @NotEmpty(message = "用户名不能为空！")
     private String username;//用户名
 
+    @JsonIgnore
     @Column(nullable = false)
     @NotEmpty(message = "密码不能为空！")
-    @JsonIgnore
     private String password;//密码
 
     @Column(unique = true,length = 20)
@@ -35,7 +35,7 @@ public class User {
     private String  sex;//性别
 
     @Column(nullable = false)
-    private int userType = 0;//用户类型，默认值为0为普通用户
+    private int userType = 0;//用户类型，默认值为0为普通注册用户，1为手机直接注册用户
 
     private String birthday;
 
@@ -68,16 +68,22 @@ public class User {
 
     private String followIds = "0";//关注某人的id字符串
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<Label> labelUserList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    @JoinTable(name="user_label",joinColumns = {@JoinColumn(name = "uid")},inverseJoinColumns =  {@JoinColumn(name = "lid")})
+    private List<Label> labelList;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<User_Label> user_labels;
+
 
     public User() {
     }
 
-    public User(String username, String password, String telephone) {
+    public User(String username, String password, String telephone,int userType) {
         this.username = username;
         this.password = password;
         this.telephone = telephone;
+        this.userType = userType;
     }
 
     public User(String username, String password, String nickname, String sex, int userType, String birthday, String bloodType, String hometown, String location, String school, String company, String telephone, String personalitySignature, String personalExplanation, Date time, int reported, int fabulous, String followIds) {
@@ -253,13 +259,22 @@ public class User {
         this.followIds = followIds;
     }
 
-    public List<Label> getLabelUserList() {
-        return labelUserList;
+    public List<Label> getLabelList() {
+        return labelList;
     }
 
-    public void setLabelUserList(List<Label> labelUserList) {
-        this.labelUserList = labelUserList;
+    public void setLabelList(List<Label> labelList) {
+        this.labelList = labelList;
     }
+
+    public List<User_Label> getUser_labels() {
+        return user_labels;
+    }
+
+    public void setUser_labels(List<User_Label> user_labels) {
+        this.user_labels = user_labels;
+    }
+
 
     @Override
     public String toString() {

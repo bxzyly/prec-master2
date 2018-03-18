@@ -37,7 +37,11 @@ public class Article {
     private Long hot = (long)0; // 热度
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<Label> articleLabelList  = new ArrayList<>();
+    @JoinTable(name = "Article_Label",joinColumns = {@JoinColumn(name = "aid")},inverseJoinColumns = {@JoinColumn(name = "lid")})
+    private List<Label> labelList;
+
+    @OneToMany(mappedBy = "article",fetch = FetchType.LAZY)
+    private List<Article_Label> article_labels;
 
     @Transient
     private List<Comment> comments; // 评论
@@ -45,12 +49,18 @@ public class Article {
     @Transient
     private List<Label> labels; // 文章标签
 
-    public List<Label> getArticleLabelList() {
-        return articleLabelList;
+    public Article() {
     }
 
-    public void setArticleLabelList(List<Label> articleLabelList) {
-        this.articleLabelList = articleLabelList;
+    public Article(Long authorId, String content, Date time, Long hot, List<Label> labelList, List<Article_Label> article_labels, List<Comment> comments, List<Label> labels) {
+        this.authorId = authorId;
+        this.content = content;
+        this.time = time;
+        this.hot = hot;
+        this.labelList = labelList;
+        this.article_labels = article_labels;
+        this.comments = comments;
+        this.labels = labels;
     }
 
     public Long getId() {
@@ -93,6 +103,22 @@ public class Article {
         this.hot = hot;
     }
 
+    public List<Label> getLabelList() {
+        return labelList;
+    }
+
+    public void setLabelList(List<Label> labelList) {
+        this.labelList = labelList;
+    }
+
+    public List<Article_Label> getArticle_labels() {
+        return article_labels;
+    }
+
+    public void setArticle_labels(List<Article_Label> article_labels) {
+        this.article_labels = article_labels;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
@@ -107,38 +133,5 @@ public class Article {
 
     public void setLabels(List<Label> labels) {
         this.labels = labels;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", authorId=" + authorId +
-                ", content='" + content + '\'' +
-                ", time=" + time +
-                ", hot=" + hot +
-                ", comments=" + comments +
-                ", labels=" + labels +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return id == article.id &&
-                authorId == article.authorId &&
-                hot == article.hot &&
-                Objects.equals(content, article.content) &&
-                Objects.equals(time, article.time) &&
-                Objects.equals(comments, article.comments) &&
-                Objects.equals(labels, article.labels);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, authorId, content, time, hot, comments, labels);
     }
 }

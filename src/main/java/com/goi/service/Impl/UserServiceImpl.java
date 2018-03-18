@@ -107,8 +107,7 @@ public class UserServiceImpl implements UserService {
             Label label = labelRepository.findOne(labelId);
             labelList1.add(label);
         }
-        u.setLabelUserList(labelList1);
-        userRepository.save(u);
+        u.setLabelList(labelList1);
         return null;
     }
 

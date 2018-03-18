@@ -19,8 +19,8 @@ public class LabelController {
     public Object getLabels(){
         List<Label>  list = labelService.getLabels();
         for(Label label:list){
-            label.setLabelfromArticle(null);
-            label.setLabelfromUser(null);
+            label.setArticleList(null);
+            label.setUserList(null);
         }
         return ResultUtil.success(list);
     }

@@ -21,11 +21,19 @@ public class Label {
     @Column(nullable = false)
     private Long parentId = Long.valueOf(0);//0表示第一级
 
-    @ManyToMany(mappedBy = "labelUserList")
-    private List<User> labelfromUser = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_label",joinColumns = {@JoinColumn(name = "lid")},inverseJoinColumns = {@JoinColumn(name="uid")})
+    private List<User> userList;
 
-    @ManyToMany(mappedBy = "articleLabelList")
-    private List<Article> labelfromArticle = new ArrayList<>();
+    @OneToMany(mappedBy = "label",fetch = FetchType.LAZY)
+    private List<User_Label> user_labels;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinTable(name = "article_label",joinColumns = {@JoinColumn(name = "lid")},inverseJoinColumns = {@JoinColumn(name="aid")})
+    private List<Article> articleList;
+
+    @OneToMany(mappedBy = "label",fetch = FetchType.LAZY)
+    private List<Article_Label> article_labels;
 
     public Label() {
     }
@@ -59,21 +67,40 @@ public class Label {
         this.parentId = parentId;
     }
 
-    public List<User> getLabelfromUser() {
-        return labelfromUser;
+
+    public List<Article> getArticleList() {
+        return articleList;
     }
 
-    public void setLabelfromUser(List<User> labelfromUser) {
-        this.labelfromUser = labelfromUser;
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
     }
 
-    public List<Article> getLabelfromArticle() {
-        return labelfromArticle;
+    public List<Article_Label> getArticle_labels() {
+        return article_labels;
     }
 
-    public void setLabelfromArticle(List<Article> labelfromArticle) {
-        this.labelfromArticle = labelfromArticle;
+    public void setArticle_labels(List<Article_Label> article_labels) {
+        this.article_labels = article_labels;
     }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public List<User_Label> getUser_labels() {
+        return user_labels;
+    }
+
+    public void setUser_labels(List<User_Label> user_labels) {
+        this.user_labels = user_labels;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
