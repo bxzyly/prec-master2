@@ -21,15 +21,15 @@ public class PrecMasterApplication extends SpringBootServletInitializer {
 	 * fastJson 配置
 	 * @return
 	 */
-	@Bean
-	public HttpMessageConverters fastJsonHttpMessageConverters(){
-		FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-		FastJsonConfig fastJsonConfig = new FastJsonConfig();
-		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-		fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-		HttpMessageConverter<?> converter = fastJsonHttpMessageConverter;
-		return new HttpMessageConverters(converter);
-	}
+//	@Bean
+//	public HttpMessageConverters fastJsonHttpMessageConverters(){
+//		FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+//		FastJsonConfig fastJsonConfig = new FastJsonConfig();
+//		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+//		fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
+//		HttpMessageConverter<?> converter = fastJsonHttpMessageConverter;
+//		return new HttpMessageConverters(converter);
+//	}
 
 	public static void main(String[] args){
 		SpringApplication.run(PrecMasterApplication.class, args);

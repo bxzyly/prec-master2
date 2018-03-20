@@ -1,5 +1,7 @@
 package com.goi.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,15 +17,17 @@ public class Agree {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int articleId;
+    @NotEmpty(message = "咨询id不能为空！")
+    private Long articleId;
 
-    private int userId;
+    @NotEmpty(message = "用户id不能为空！")
+    private Long userId;
 
     public Agree(){
 
     }
 
-    public Agree(int articleId, int userId) {
+    public Agree(Long articleId, Long userId) {
         this.articleId = articleId;
         this.userId = userId;
     }
@@ -36,19 +40,19 @@ public class Agree {
         this.id = id;
     }
 
-    public int getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(int articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
