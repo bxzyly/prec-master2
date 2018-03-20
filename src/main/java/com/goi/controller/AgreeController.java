@@ -1,6 +1,7 @@
 package com.goi.controller;
 
 import com.goi.entity.Agree;
+import com.goi.entity.Disagree;
 import com.goi.service.AgreeService;
 import com.goi.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,17 @@ public class AgreeController {
         if(bindingResult.hasErrors())
             return ResultUtil.error(bindingResult);
         if( (boolean) agreeService.addAgree(agree)){
+            return ResultUtil.success();
+        }else{
+            return ResultUtil.fail();
+        }
+    }
+
+    @PostMapping("/addDisagree")
+    public Object addAgree(@Valid Disagree  disAgree, BindingResult bindingResult)throws Exception{
+        if(bindingResult.hasErrors())
+            return ResultUtil.error(bindingResult);
+        if( (boolean) agreeService.addDisagree(disAgree)){
             return ResultUtil.success();
         }else{
             return ResultUtil.fail();
