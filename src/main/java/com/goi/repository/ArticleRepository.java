@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ArticleRepository extends CrudRepository<Article,Long> {
 
-    @Query(nativeQuery = true,value = "select * from Article ORDER by hot DESC  limit 0,50")
+    @Query(nativeQuery = true,value = "select * from article ORDER by hot DESC  limit 0,50")
     List<Article> getArticles();
 }

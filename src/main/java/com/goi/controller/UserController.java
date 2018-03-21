@@ -89,7 +89,8 @@ public class UserController{
         }
         boolean loginFlag = userService.checkLoginByTelephone(telephone);
         if(loginFlag){
-            return ResultUtil.success();
+            User u = (User)userService.getUserByTelephone(telephone);
+            return ResultUtil.success(u);
         }else{
             User u = null;
             userService.addUser(u = new User("用户_"+telephone,"123456",telephone,1));

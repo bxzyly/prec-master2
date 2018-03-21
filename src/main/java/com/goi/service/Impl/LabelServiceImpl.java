@@ -18,6 +18,7 @@ public class LabelServiceImpl implements LabelService {
     @Override
     @Transactional
     public List<Label> getLabels(){
-        return (List<Label>)labelRepository.findAll();
+        List<Label> list = (List<Label>)labelRepository.findAll();
+        return list;
     }
 }

@@ -7,9 +7,7 @@ import com.goi.service.ArticleService;
 import com.goi.service.Impl.ArticleServiceImpl;
 import com.goi.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
@@ -28,14 +26,13 @@ public class ArticleController {
      * @return
      */
 
-    @RequestMapping("/getArticles")
-    public Object getArticles(HttpSession httpSession){
-        Long userId =(Long) httpSession.getAttribute("userId");
+    @PostMapping("/getArticles")
+    public Object getArticles(@RequestParam("userId") Long userId){
         List<Article> articleList = (List<Article>)articleService.getArticles(userId);
         return ResultUtil.success(articleList);
     }
 
-    @RequestMapping("/getArticles/{labelId}")
+    @GetMapping("/getArticles/{labelId}")
     public Object getArticleById(@PathParam("labelId") Long labelId) throws Exception {
         return ResultUtil.success(articleService.getArticleById(labelId));
     }

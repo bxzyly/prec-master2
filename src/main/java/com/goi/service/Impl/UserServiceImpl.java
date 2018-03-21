@@ -111,6 +111,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    @Transactional
+    public Object getUserByTelephone(String telephone)throws Exception{
+       return  userRepository.findByTelephone(telephone);
+    }
 
     /**
      * 判断手机号是否注册过

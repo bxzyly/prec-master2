@@ -6,10 +6,6 @@
 	<groupId>com.poi</groupId>
 	<artifactId>prec</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-<!-- jar包
-	<packaging>jar</packaging> -->
-
-	<!-- war包 -->
 	<packaging>war</packaging>
 
 	<name>prec-master</name>
@@ -31,11 +27,11 @@
 	<dependencies>
 
 		<!-- war包打包添加依赖 -->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,6 +42,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.15</version>
 		</dependency>
 
 		<!-- Mysql -->

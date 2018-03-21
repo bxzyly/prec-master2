@@ -22,5 +22,8 @@ public interface UserService {
     Object addLabelList(Long userId, List<Long> labelList)throws Exception;
 
     @Transactional
+    Object getUserByTelephone(String telephone)throws Exception;
+
+    @Transactional
     boolean checkLoginByTelephone(String telephone);//手机登录
 }
