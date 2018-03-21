@@ -25,7 +25,6 @@ public class ArticleController {
 
     /**
      * 获得articles
-     * @param httpSession
      * @return
      */
 
@@ -33,9 +32,6 @@ public class ArticleController {
     public Object getArticles(HttpSession httpSession){
         Long userId =(Long) httpSession.getAttribute("userId");
         List<Article> articleList = (List<Article>)articleService.getArticles(userId);
-//        for(Article article:articleList){
-//            article.setArticleLabelList(null);
-//        }
         return ResultUtil.success(articleList);
     }
 

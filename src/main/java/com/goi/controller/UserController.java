@@ -1,12 +1,11 @@
 package com.goi.controller;
 
-import com.goi.entity.Label;
 import com.goi.entity.User;
 import com.goi.exception.MyException;
 import com.goi.result.Result;
-import com.goi.service.Impl.RedisServiceImpl;
 import com.goi.service.UserService;
 import com.goi.util.MD5Util;
+import com.goi.util.RedisUtil;
 import com.goi.util.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,10 @@ import java.util.List;
 public class UserController{
 
     @Autowired
-    private UserService userService;
+    private RedisUtil redisUtil;
 
     @Autowired
-    private RedisServiceImpl redisService;
+    private UserService userService;
 
 
     /**
@@ -38,7 +37,7 @@ public class UserController{
         if(bindingResult.hasErrors()){
             return ResultUtil.error(bindingResult);
         }
-        String tempvcode = String.valueOf(redisService.get(user.getTelephone()));
+        String tempvcode = String.valueOf(redisUtil.get(user.getTelephone()));
         if(tempvcode==null){
             throw new MyException("验证码失效！");
         }else if(!MD5Util.md5Password(user.getTelephone()+vcode).equals(tempvcode)){
@@ -82,7 +81,7 @@ public class UserController{
 
     @PostMapping("/userLoginByTelephone")
     public Result loginByTelephone(@RequestParam("telephone") String telephone,@RequestParam("verificationCode") String verificationCode) throws Exception {
-        String tempvcode = String.valueOf(redisService.get(telephone));
+        String tempvcode = String.valueOf(redisUtil.get(telephone));
         if(tempvcode==null){
             throw new MyException("验证码失效！");
         }else if(!MD5Util.md5Password(telephone+verificationCode).equals(tempvcode)){
